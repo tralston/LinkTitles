@@ -127,6 +127,7 @@
 				$templatesDelimiter .                       // templates (if requested)
 				'^ .+?\n|\n .+?\n|\n .+?$|^ .+?$|' .        // preformatted text
 				'<nowiki>.*?<.nowiki>|<code>.*?<\/code>|' . // nowiki/code
+				'<nolink>.*?<\/nolink>|' .                  // prevent this area from being linked
 				'\[' . $urlPattern . '\s.+?\]|'. $urlPattern .  '(?=\s|$)|' . // urls
 				'(?<=\b)\S+\@(?:\S+\.)+\S+(?=\b)' .        // email addresses
 				')/i';
