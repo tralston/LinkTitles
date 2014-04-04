@@ -23,40 +23,41 @@
     die( 'Not an entry point.' );
   }
 
-	/*
-		error_reporting(E_ALL);
-		ini_set('display_errors', 'On');
-		ini_set('error_log', 'php://stderr');
-		$wgMainCacheType = CACHE_NONE;
-		$wgCacheDirectory = false;
-	*/
+  /*
+  error_reporting(E_ALL);
+  ini_set('display_errors', 'On');
+  ini_set('error_log', 'php://stderr');
+  $wgMainCacheType = CACHE_NONE;
+  $wgCacheDirectory = false;
+  */
 
-	// Configuration variables
-	$wgLinkTitlesPreferShortTitles = false;	
-	$wgLinkTitlesMinimumTitleLength = 3;
-	$wgLinkTitlesParseHeadings = false;
-	$wgLinkTitlesParseOnEdit = true;
-	$wgLinkTitlesParseOnRender = false;
-	$wgLinkTitlesSkipTemplates = false;
-	$wgLinkTitlesBlackList = array();
-	$wgLinkTitlesFirstOnly = false;
-	$wgLinkTitlesWordStartOnly = true;
-	$wgLinkTitlesWordEndOnly = true;
-	$wgLinkTitlesSmartMode = true;
+  // Configuration variables
+  $wgLinkTitlesPreferShortTitles  = false;
+  $wgLinkTitlesMinimumTitleLength = 3;
+  $wgLinkTitlesParseHeadings      = false;
+  $wgLinkTitlesParseOnEdit        = true;
+  $wgLinkTitlesParseOnRender      = false;
+  $wgLinkTitlesSkipTemplates      = false;
+  $wgLinkTitlesBlackList          = array();
+  $wgLinkTitlesFirstOnly          = false;
+  $wgLinkTitlesWordStartOnly      = true;
+  $wgLinkTitlesWordEndOnly        = true;
+  $wgLinkTitlesSmartMode          = true;
 
   $wgExtensionCredits['parserhook'][] = array(
-    'path'           => __FILE__,
-    'name'           => 'LinkTitles',
-    'author'         => '[https://www.mediawiki.org/wiki/User:Bovender Daniel Kraus]', 
-    'url'            => 'https://www.mediawiki.org/wiki/Extension:LinkTitles',
-    'version'        => '2.3.1',
-    'descriptionmsg' => 'linktitles-desc'
-    );
+     'path' => __FILE__,
+    'name' => 'LinkTitles',
+    'author' => '[https://www.mediawiki.org/wiki/User:Bovender Daniel Kraus]',
+    'url' => 'https://www.mediawiki.org/wiki/Extension:LinkTitles',
+    'version' => '2.3.1',
+    'descriptionmsg' => 'linktitles-desc' 
+  );
 
-	$wgHooks['ParserFirstCallInit'][] = 'wfNoLinkTitlesInit';
-  
+  $wgHooks['ParserFirstCallInit'][] = 'wfNoLinkTitlesInit';
+
   // Hook our callback function into the parser
-  function wfNoLinkTitlesInit( Parser $parser ) {
+  function wfNoLinkTitlesInit( Parser $parser )
+  {
     // When the parser sees the <sample> tag, it executes 
     // the wfSampleRender function (see below)
     $parser->setHook( 'nolink', 'wfNoLinkTitleRender' );
@@ -64,20 +65,20 @@
     // success or otherwise have meaning - it just must always be true.
     return true;
   }
-  
-  function wfNoLinkTitleRender( $input, array $args, Parser $parser, PPFrame $frame ) {
+
+  function wfNoLinkTitleRender( $input, array $args, Parser $parser, PPFrame $frame )
+  {
     // Nothing exciting here, just escape the user-provided
     // input and throw it back out again
     // return htmlspecialchars( $input );
     $output = $parser->recursiveTagParse( $input, $frame );
     return $output;
   }
-  
-	
-  $wgExtensionMessagesFiles['LinkTitles'] = dirname( __FILE__ ) . '/LinkTitles.i18n.php';
+
+
+  $wgExtensionMessagesFiles['LinkTitles']      = dirname( __FILE__ ) . '/LinkTitles.i18n.php';
   $wgExtensionMessagesFiles['LinkTitlesMagic'] = dirname( __FILE__ ) . '/LinkTitles.i18n.magic.php';
-  $wgAutoloadClasses['LinkTitles'] = dirname( __FILE__ ) . '/LinkTitles.body.php';
-	$wgExtensionFunctions[] = 'LinkTitles::setup';
+  $wgAutoloadClasses['LinkTitles']             = dirname( __FILE__ ) . '/LinkTitles.body.php';
+  $wgExtensionFunctions[]                      = 'LinkTitles::setup';
 
-	// vim: ts=2:sw=2:noet
-
+  // vim: ts=2:sw=2:noet
