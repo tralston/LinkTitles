@@ -77,7 +77,8 @@
 			// If the page contains the magic word '__NOAUTOLINKS__', do not parse
 			// the content.
 			$mw = MagicWord::get('MAG_LINKTITLES_NOAUTOLINKS');
-			if ( $mw -> match( $text ) ) {
+      $pfText = $article->getTitle()->getPrefixedText();
+      if ( $mw -> match( $text ) || substr($pfText, 0, 7) == 'Module:' ) {
 				return true;
 			}
 
