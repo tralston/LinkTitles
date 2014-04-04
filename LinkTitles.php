@@ -53,6 +53,27 @@
     'descriptionmsg' => 'linktitles-desc'
     );
 
+	$wgHooks['ParserFirstCallInit'][] = 'wfNoLinkTitlesInit';
+  
+  // Hook our callback function into the parser
+  function wfNoLinkTitlesInit( Parser $parser ) {
+    // When the parser sees the <sample> tag, it executes 
+    // the wfSampleRender function (see below)
+    $parser->setHook( 'nolink', 'wfNoLinkTitleRender' );
+    // Always return true from this function. The return value does not denote
+    // success or otherwise have meaning - it just must always be true.
+    return true;
+  }
+  
+  function wfNoLinkTitleRender( $input, array $args, Parser $parser, PPFrame $frame ) {
+    // Nothing exciting here, just escape the user-provided
+    // input and throw it back out again
+    // return htmlspecialchars( $input );
+    $output = $parser->recursiveTagParse( $input, $frame );
+    return $output;
+  }
+  
+	
   $wgExtensionMessagesFiles['LinkTitles'] = dirname( __FILE__ ) . '/LinkTitles.i18n.php';
   $wgExtensionMessagesFiles['LinkTitlesMagic'] = dirname( __FILE__ ) . '/LinkTitles.i18n.magic.php';
   $wgAutoloadClasses['LinkTitles'] = dirname( __FILE__ ) . '/LinkTitles.body.php';
